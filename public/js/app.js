@@ -22,3 +22,18 @@ function send() {
 .then(function(res){ console.log(res) })
 .catch(function(error){ console.log(error)});
 }
+var socket = io();
+socket.on('smsStatus', function(data) {
+  displayStatus('Message ID ' + data.id + ' successfully sent to ' + data.number);
+});
+
+Notification.requestPermission().then(function(status) {
+  console.log(status); // when a user granted, status == 'granted', otherwise, 'denied'
+});
+
+function displayStatus(message) {
+   var notification = new Notification('Nexmo', {
+     body: message,
+     icon: 'images/icon-nexmo.png'
+   });
+ }
